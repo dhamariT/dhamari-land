@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overscroll-behavior: none;
+}
+
+body {
+    background-color: #a87932;
+    font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 1rem;
+}
+
+a {
+    color: rgb(1, 1, 140);
+}
+
+.container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+}
+
+.content-left,
+.content-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-right {
+    gap: 1rem;
+}
+
+.info-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 32rem;
+    align-items: flex-start;
+}
+
+.introduction,
+.thoughts,
+.contact-info,
+.info-block {
+    background-color: white;
+    padding: 1rem;
+    outline: 2px solid black;
+    max-width: 32rem;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.introduction {
+    background-color: #f9f5e2;
+}
+
+/* stands in for the video until there's a clip to drop in */
+.media,
+video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 720 / 539;
+    display: block;
+    outline: 2px solid black;
+    align-self: flex-start;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
+.media {
+    background-color: #c48d3b;
+}
+
+.info-block {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4rem;
+    min-width: 8rem;
+    cursor: pointer;
+}
+
+.info-block:hover {
+    box-shadow: 0 0 10px gold;
+    color: blue;
+}
+
+.back::after {
+    content: 'go back';
+}
+
+.back:hover::after {
+    content: '⤾';
+}
+
+.introduction p,
+.thoughts p,
+.thoughts ul,
+.contact-info p {
+    max-width: 30rem;
+    overflow-wrap: break-word;
+    margin-bottom: 0.75rem;
+}
+
+.introduction p:last-of-type,
+.thoughts ul:last-of-type,
+.contact-info p:last-of-type {
+    margin-bottom: 0;
+}
+
+.thoughts p:last-of-type {
+    margin-bottom: 0.5rem;
+}
+
+.introduction p:first-of-type,
+.thoughts p:first-of-type,
+.contact-info p:first-of-type {
+    margin-top: -0.25rem;
+}
+
+ul {
+    line-height: 1.75rem;
+}
+
+li {
+    list-style: square;
+    margin-left: 1rem;
+}
+
+.section-header {
+    margin-bottom: 1.75rem;
+}
+
+.topic-one   { background-color: #e3c79d; }
+.topic-two   { background-color: #89ad80; }
+.topic-three { background-color: #9db1e3; }
+.topic-four  { background-color: #fcb33d; }
+.topic-five  { background-color: #b09bc4; }
+.topic-six   { background-color: #e6786c; }
+.topic-seven { background-color: #bacfc9; }
+
+::selection {
+    color: #915c0c;
+}
+
+.email {
+    position: relative;
+    background-color: rgba(255, 208, 0, 0.75);
+    padding: 0 0.25rem;
+    cursor: pointer;
+    user-select: text;
+}
+
+.email:hover {
+    background-color: rgba(255, 208, 0, 1);
+}
+
+.email[aria-pressed="true"]::after {
+    content: '(copied to clipboard!!)';
+    position: absolute;
+    bottom: calc(100% + 0.25rem);
+    left: 50%;
+    transform: translateX(-50%);
+    color: darkgoldenrod;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    padding: 1rem 0;
+    background-color: white;
+    border-top: 2px solid black;
+}
+
+marquee {
+    display: block;
+}
+
+/* 1-column */
+@media only screen and (max-width: 599px) {
+    .content-left,
+    .content-right {
+        width: 100%;
+    }
+
+    .media,
+    video,
+    .introduction,
+    .thoughts,
+    .contact-info,
+    .info-blocks {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .introduction p,
+    .thoughts p,
+    .thoughts ul,
+    .contact-info p {
+        max-width: 100%;
+    }
+}
+
+/* 2-column: media+intro left, thoughts+contact right */
+@media only screen and (min-width: 600px) and (max-width: 1199px) {
+    body {
+        max-height: 100vh;
+        overflow: hidden;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: calc((100vw - 3rem) * 539 / 2 / 720) auto;
+        align-items: start;
+    }
+
+    .media,
+    video         { grid-column: 1; grid-row: 1; }
+    .content-left  { grid-column: 1; grid-row: 2; }
+    .content-right { grid-column: 2; grid-row: 1 / 3; }
+
+    .introduction {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .media,
+    video,
+    .introduction,
+    .thoughts,
+    .contact-info,
+    .info-blocks {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .introduction p,
+    .thoughts p,
+    .thoughts ul,
+    .contact-info p {
+        max-width: 100%;
+    }
+}
+
+/* 3-column: media | intro | thoughts+contact */
+@media only screen and (min-width: 1200px) {
+    .container {
+        flex-wrap: nowrap;
+    }
+
+    .media,
+    video {
+        width: 32rem;
+        max-width: 100%;
+    }
+
+    .introduction {
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .thoughts {
+        max-height: 20rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

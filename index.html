@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="dhamari dot land, dhamari's personal website" />
+    <meta name="og:description" content="dhamari dot land, dhamari's personal website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="keywords" content="dhamari dot land, dhamari.land, dhamari land, dhamari" />
+
+    <link href="styles/style.css" rel="stylesheet" type="text/css" />
+
+    <title>dhamari.land</title>
+</head>
+
+<body>
+    <!-- for indieweb auth -->
+    <link href="mailto:hi@dhamari.land" rel="me">
+    <link href="https://github.com/dhamariT" rel="me">
+
+    <main>
+        <div class="header">
+            <h1>dhamari.land</h1>
+            <!-- the mini grid is generated from the tiles below. click it to shuffle. -->
+            <div class="grid-icon" id="grid-icon" aria-label="shuffle the grid" role="button" tabindex="0"></div>
+        </div>
+
+        <!--
+          ADD A TILE = two steps.
+          1. copy an <a> block below, set data-id and the background-color
+          2. in styles/style.css add:
+                 .module.YOURID::after       { content: 'label'; }
+                 .module.YOURID:hover::after { content: 'hover label'; }
+          the mini grid and the favicon pick it up automatically.
+        -->
+        <div class="grid" id="main-grid">
+            <a href="about/">
+                <div class="module about" data-id="about" style="background-color: #c48d3b"></div>
+            </a>
+            <a href="https://github.com/dhamariT" target="_blank" rel="noopener">
+                <div class="module github" data-id="github" style="background-color: #89ad80"></div>
+            </a>
+            <a href="https://hackclub.com/" target="_blank" rel="noopener">
+                <div class="module hackclub" data-id="hackclub" style="background-color: #e6786c"></div>
+            </a>
+            <a href="mailto:hi@dhamari.land">
+                <div class="module email" data-id="email" style="background-color: #9db1e3"></div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <marquee>
+            a thank you to the people who got me here. this list is far from complete and will keep growing...
+        </marquee>
+    </footer>
+
+    <script>
+        const icon = document.getElementById("grid-icon");
+        const mainGrid = document.getElementById("main-grid");
+        const main = document.querySelector("main");
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // the mini grid mirrors the tiles, so the icon is always in sync with the page
+        function buildIcon() {
+            const tiles = [...mainGrid.querySelectorAll(".module")];
+            const side = Math.ceil(Math.sqrt(tiles.length));
+            icon.style.gridTemplateColumns = `repeat(${side}, 10px)`;
+            icon.innerHTML = "";
+            tiles.forEach(tile => {
+                const sq = document.createElement("div");
+                sq.className = "color";
+                sq.dataset.id = tile.dataset.id;
+                sq.style.backgroundColor = tile.style.backgroundColor;
+                icon.appendChild(sq);
+            });
+            return side;
+        }
+
+        const FAV_PAD = 4;
+        const favCanvas = document.createElement("canvas");
+        const favCtx = favCanvas.getContext("2d");
+
+        function updateFavicon() {
+            const squares = [...icon.querySelectorAll(".color")];
+            const side = Math.ceil(Math.sqrt(squares.length));
+            const cell = 20;
+            const size = FAV_PAD * 2 + cell * side;
+            favCanvas.width = favCanvas.height = size;
+
+            favCtx.fillStyle = "black";
+            favCtx.fillRect(0, 0, size, size);
+            squares.forEach((sq, i) => {
+                favCtx.fillStyle = sq.style.backgroundColor;
+                favCtx.fillRect(
+                    FAV_PAD + (i % side) * cell,
+                    FAV_PAD + Math.floor(i / side) * cell,
+                    cell, cell
+                );
+            });
+
+            document.querySelectorAll('link[rel~="icon"]').forEach(link => link.remove());
+            const link = document.createElement("link");
+            link.rel = "icon";
+            link.href = favCanvas.toDataURL();
+            document.head.appendChild(link);
+        }
+
+        function shuffleGrids() {
+            const tiles = [...mainGrid.querySelectorAll("a")];
+            const shuffled = shuffle([...tiles]);
+
+            icon.classList.add("shake");
+            main.classList.add("shake");
+            shuffled.forEach(link => link.querySelector(".module").classList.add("shake"));
+
+            setTimeout(() => {
+                shuffled.forEach(link => mainGrid.appendChild(link));
+                buildIcon();
+                updateFavicon();
+
+                icon.classList.remove("shake");
+                main.classList.remove("shake");
+                shuffled.forEach(link => link.querySelector(".module").classList.remove("shake"));
+            }, 400);
+        }
+
+        icon.addEventListener("click", shuffleGrids);
+        icon.addEventListener("keypress", e => {
+            if (e.key === "Enter" || e.key === " ") shuffleGrids();
+        });
+
+        buildIcon();
+        updateFavicon();
+    </script>
+</body>
+
+</html>

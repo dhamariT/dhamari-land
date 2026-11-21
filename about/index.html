@@ -18,15 +18,18 @@
   <div class="container">
     <!-- swap this for <video autoplay muted loop playsinline poster="poster.jpg">
          <source src="play.mp4" type="video/mp4" /></video> when you have a clip -->
-    <div class="media" aria-hidden="true"></div>
+    <img class="media" src="../assets/photo.jpg" alt="dhamari trice-hanson" />
 
     <div class="content-left">
       <section class="introduction">
         <p>hello!! dhamari here!!</p>
-        <p>intro paragraph goes here.</p>
-        <p>what i'm doing now.</p>
-        <p>what i did before.</p>
-        <p>where to find me when i'm not at a keyboard.</p>
+        <!-- ABOUT-INTRO -->
+        <!-- EDIT ME: swap the paragraph below for your own words. -->
+        <p>i'm a first-year computer engineering student at kettering university and the founder of testbed, which builds release-safety software for robot fleets. i like building things that have to work in the real world.</p>
+        <!-- /ABOUT-INTRO -->
+        <p>what i'm doing now: studying computer engineering at kettering university (b section, co-op jan to mar 2027). building <a href="https://testbed.engineering" target="_blank" rel="noopener">testbed</a>, release-safety software for robot fleets. building <a href="https://github.com/dhamariT/joobie" target="_blank" rel="noopener">joobie</a>, a cold-gas thruster rig that's my first project mixing mechanical and electrical engineering.</p>
+        <p>what i did before: took a gap year as an engineer at hack club, where i built and maintained open-source production codebases, owned programs end to end, and founded and ran a 50-person project review team. programmer and driver on first robotics team 3632 (2025 rookie all-star). 2025 skillsusa electronics state gold medalist.</p>
+        <p>where to find me when i'm not at a keyboard: at the gym, or around kettering's rocket club (karo).</p>
       </section>
     </div>
 
@@ -34,19 +37,17 @@
       <section class="thoughts topic-one">
         <p class="section-header">on my mind lately:</p>
         <ul>
-          <li>thing one</li>
-          <li>thing two</li>
-          <li>thing three</li>
-          <li>thing four</li>
+          <li>manufacturing: how things actually get built, tested, and calibrated at scale</li>
+          <li>making robot software releases safe</li>
+          <li>cold-gas thrusters</li>
+          <li>putting an esp32 inside my ti-84 calculator</li>
         </ul>
       </section>
 
       <section class="contact-info">
-        <p>slowly making my way through my inbox..</p>
-        <p>you can always reach me at
-          <mark class="email" id="email" onclick="copyEmail()" tabindex="0" role="button"
-            onkeypress="if(event.key==='Enter'){copyEmail()}" aria-pressed="false"
-            aria-live="polite">hi@dhamari.land</mark>
+        <p>want to say hi?</p>
+        <p>you can find me on <a href="https://github.com/dhamariT" target="_blank" rel="noopener">github.com/dhamariT</a>
+          or over at <a href="https://testbed.engineering" target="_blank" rel="noopener">testbed.engineering</a>
         </p>
       </section>
 
@@ -63,16 +64,6 @@
       a thank you to the people who got me here. this list is far from complete and will keep growing...
     </marquee>
   </footer>
-
-  <script>
-    function copyEmail() {
-      const el = document.getElementById("email");
-      navigator.clipboard.writeText(el.textContent.trim()).then(() => {
-        el.setAttribute("aria-pressed", "true");
-        setTimeout(() => el.setAttribute("aria-pressed", "false"), 1500);
-      });
-    }
-  </script>
 
 </body>
 
